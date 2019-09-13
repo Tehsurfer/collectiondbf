@@ -30,8 +30,7 @@ def run():
         collection = sys.argv[3]
     elif len(sys.argv) == 1:
         ui = DetailsInput()
-        api_secret, api_token, collection = ui.values()
-
+        api_token, api_secret, collection = ui.values()
 
     bf = Blackfynn(api_token=api_token,api_secret=api_secret)
     print(f'Connected to Blackfynn')
