@@ -4,8 +4,8 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setuptools.setup(
-    name="blackfynn-collection-downloader",
-    version="0.0.1",
+    name="collectiondbf",
+    version="0.0.4",
     author="Jesse Khorasanee",
     author_email="jessekhorasanee@gmail.com",
     description="Download all files in a Blackfynn collection via command line or gui",
@@ -14,12 +14,17 @@ setuptools.setup(
     url="https://github.com/pypa/sampleproject",
     packages=setuptools.find_packages(),
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 1 - Planning',
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
-        'Intended Audience :: Academic Researchers',
+        "Intended Audience :: Science/Research",
+    ],
+    install_requires=[
+         'blackfynn',
+         'requests',
+        'progressbar2'
     ],
     python_requires='>=3.6',
 )
