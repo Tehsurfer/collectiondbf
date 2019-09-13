@@ -1,11 +1,18 @@
-blackfynn-collection-downloader
-======
+collectiondbf
+=======
+Collection Downloads from BlackFynn 
+
 A tool for downloading a collection of files from Blackfynn
 
-#Usage
+Usage
+-------
+```
+pip install collectiondbf
+python -m collectiondbf <api-key> <api-secret> <collection:ID>
+```
 
-```
-pip install git+https://github.com/Tehsurfer/blackfynn-collection-downloader.git
-pip install -r requirements.txt
-python -m blackfynn-collection-downloader <api-key> <api-secret> <collection:ID>
-```
+If you cannot find the collection ID for the folder you wish to download, check for it in the url like so:
+
+![collectionID](https://user-images.githubusercontent.com/37255664/64832679-fe039c80-d62e-11e9-96db-38a54cbd6c55.jpg)
+
+
