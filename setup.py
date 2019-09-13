@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="collectiondbf",
-    version="0.0.4",
+    version="0.1.0",
     author="Jesse Khorasanee",
     author_email="jessekhorasanee@gmail.com",
     description="Download all files in a Blackfynn collection via command line or gui",
@@ -14,7 +14,7 @@ setuptools.setup(
     url="https://github.com/pypa/sampleproject",
     packages=setuptools.find_packages(),
     classifiers=[
-        'Development Status :: 1 - Planning',
+        'Development Status :: 3 - Alpha',
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "License :: OSI Approved :: MIT License",
