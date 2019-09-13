@@ -5,13 +5,13 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="collectiondbf",
-    version="0.1.0",
+    version="0.1.1",
     author="Jesse Khorasanee",
     author_email="jessekhorasanee@gmail.com",
     description="Download all files in a Blackfynn collection via command line or gui",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/pypa/sampleproject",
+    url="https://github.com/tehsurfer/collectiondbf",
     packages=setuptools.find_packages(),
     classifiers=[
         'Development Status :: 3 - Alpha',

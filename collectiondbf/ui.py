@@ -4,6 +4,7 @@ from tkinter import *
 class DetailsInput():
     def __init__(self):
         self.top = Tk()
+        self.top.title('Collection Download')
         self.top.geometry("300x200+500+500")
         self._api_token = StringVar()
         self._api_secret = StringVar()
