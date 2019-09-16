@@ -2,10 +2,9 @@
 
 ### Collection Downloads from BlackFynn 
 
-A tool for downloading a collection of files from Blackfynn
+A python tool for downloading a collection of files from Blackfynn. Can be run from command line or enter input in a UI
 
 ## Installation 
-Python 3.3+ and tkinter is required for collectiondbf to work
 
 #### Windows
 `pip install collectiondbf`
@@ -18,21 +17,24 @@ pip3 install collectiondbf
 
 #### MacOS
 `pip install collectiondbf`
-**Note that since macOS python does not come with tkinter, only command line usage is supported
 
+*_Note that since macOS python does not come with tkinter, only command line usage is supported._
 
-## Usage
+_collectiondbf requires python 3.3+ and tkinter to run_
+
+# Usage
 
 ### Command Line
 The commands below will download the desired directory at the command prompts location.
 ```
-pip install collectiondbf
 python -m collectiondbf <api-key> <api-secret> <collection:ID>
 ```
 
 If you cannot find the collection ID for the folder you wish to download, check for it in the url like so:
 
 ![collectionID](https://user-images.githubusercontent.com/37255664/64832679-fe039c80-d62e-11e9-96db-38a54cbd6c55.jpg)
+
+Alternatively check out [_this 50s video tutorial_](https://drive.google.com/file/d/1sZMIx8SsEygwtRhLSu_O5wT0Ql0-UJDx/view?usp=sharing) on how to find collection ID and API keys in Blackfynn
 
 ### User Interface
 Running `python -m collectiondbf`will start the following ui to input keys and collection ID
