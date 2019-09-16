@@ -33,10 +33,10 @@ def run():
         api_token, api_secret, collection = ui.values()
 
     bf = Blackfynn(api_token=api_token,api_secret=api_secret)
-    print(f'Connected to Blackfynn')
-    print(f'Looking for Collection...')
+    print('Connected to Blackfynn')
+    print('Looking for Collection...')
     col = bf.get(collection)
-    print(f'Collection found. Staring file downloads...')
+    print('Collection found. Staring file downloads...')
     try:
         os.mkdir(col.name)
     except FileExistsError:
@@ -48,7 +48,7 @@ def run():
             s3_url = file.url
             response = requests.get(s3_url)
             if response.status_code == 200:
-                sys.stdout.write(f'\rDownloading file: {file.name}')
+                sys.stdout.write('\rDownloading file: %s' % file.name)
                 f = open(col.name + '/' + file.name + file_type, 'wb')
                 f.write(response.content)
                 sys.stdout.flush()
