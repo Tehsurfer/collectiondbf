@@ -3,7 +3,9 @@ from blackfynn import Blackfynn
 from .config import API_TOKEN, API_SECRET
 import os
 import sys
-from .ui import DetailsInput
+import platform
+if platform != "darwin":
+    from .ui import DetailsInput
 import progressbar
 
 def env_keys_valid():
@@ -29,6 +31,9 @@ def run():
         api_secret = sys.argv[2]
         collection = sys.argv[3]
     elif len(sys.argv) == 1:
+        if platform == "darwin":
+            print('Sorry, tkinter in MacOS is not supported :(. Please use the CLI options')
+            return
         ui = DetailsInput()
         api_token, api_secret, collection = ui.values()
 
