@@ -4,6 +4,23 @@
 
 A tool for downloading a collection of files from Blackfynn
 
+## Installation 
+Python 3.3+ and tkinter is required for collectiondbf to work
+
+#### Windows
+`pip install collectiondbf`
+
+#### Linux 
+```
+sudo apt-get install python3-tk
+pip3 install collectiondbf
+```
+
+#### MacOS
+`pip install collectiondbf`
+**Note that since macOS python does not come with tkinter, only command line usage is supported
+
+
 ## Usage
 
 ### Command Line
