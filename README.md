@@ -1,4 +1,6 @@
-# collectiondbf
+# collectiondbf 
+[![PyPI version](https://badge.fury.io/py/collectiondbf.svg)](https://badge.fury.io/py/collectiondbf)
+[![Maintainability](https://api.codeclimate.com/v1/badges/3142677487dbf6ff656b/maintainability)](https://codeclimate.com/github/Tehsurfer/collectiondbf/maintainability)
 
 ### Collection Downloads from BlackFynn 
 
