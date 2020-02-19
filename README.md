@@ -42,5 +42,22 @@ Alternatively check out [_this 50s video tutorial_](https://drive.google.com/fil
 Running `python -m collectiondbf`will start the following ui to input keys and collection ID
 ![select_channel_2019-09-13 16-24-58 (2)](https://user-images.githubusercontent.com/37255664/64837534-1a113900-d643-11e9-9ba7-3cd37ca74151.jpg)
 
+### Using config.py for regular usage 
+
+Set environment variables to your Blackfynn keys
+```
+BLACKFYNN_API_TOKEN=xxxxx-xxxxx-xxxxx
+BLACKFYNN_API_SECRET=xxxxx-xxxxx-xxxxx
+```
+_or_
+
+Edit config.py to your keys:
+import os
+_config.py_
+```
+import os
+API_TOKEN = 'xxxxx-xxxxx-xxxx'
+API_SECRET = 'xxxxx-xxxxx-xxxxx'
+```
 
 
