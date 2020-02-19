@@ -52,7 +52,7 @@ BLACKFYNN_API_SECRET=xxxxx-xxxxx-xxxxx
 _or_
 
 Edit config.py to your keys:
-import os
+
 _config.py_
 ```
 import os
