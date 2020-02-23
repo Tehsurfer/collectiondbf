@@ -48,13 +48,13 @@ def run():
         pass
 
     for item in progressbar.progressbar(col.items):
-        for file in item.files:
-            file_type = '.' + file.s3_key.split('.')[-1]
-            s3_url = file.url
-            response = requests.get(s3_url)
-            if response.status_code == 200:
-                sys.stdout.write('\rDownloading file: %s' % file.name)
-                f = open(col.name + '/' + file.name + file_type, 'wb')
-                f.write(response.content)
-                sys.stdout.flush()
-
+        if 'files' in dir(item):
+            for file in item.files:
+                file_type = '.' + file.s3_key.split('.')[-1]
+                s3_url = file.url
+                response = requests.get(s3_url)
+                if response.status_code == 200:
+                    sys.stdout.write('\rDownloading file: %s' % file.name)
+                    f = open(col.name + '/' + file.name + file_type, 'wb')
+                    f.write(response.content)
+                    sys.stdout.flush()
