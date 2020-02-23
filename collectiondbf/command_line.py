@@ -50,7 +50,7 @@ def run():
     for item in progressbar.progressbar(col.items):
         if 'files' in dir(item):
             for file in item.files:
-                file_type = '.' + file.s3_key.split('.')[-1]
+                file_type = get_file_type(file.s3_key)
                 s3_url = file.url
                 response = requests.get(s3_url)
                 if response.status_code == 200:
@@ -58,3 +58,8 @@ def run():
                     f = open(col.name + '/' + file.name + file_type, 'wb')
                     f.write(response.content)
                     sys.stdout.flush()
+
+def get_file_type(s3_url):
+    if len(s3_url.split('.')) == 2:
+        return ''
+    return s3_url.split('.')[-1]
