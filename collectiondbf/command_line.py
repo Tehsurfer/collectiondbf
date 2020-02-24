@@ -40,7 +40,7 @@ def run():
     bf = Blackfynn(api_token=api_token,api_secret=api_secret)
     print('Connected to Blackfynn')
     print('Looking for Collection...')
-    col = bf.get(collection)
+    col = get_folder_items(bf, collection)
     print('Collection found. Staring file downloads...')
     try:
         os.mkdir(col.name)
@@ -63,3 +63,8 @@ def get_file_type(s3_url):
     if len(s3_url.split('.')) == 2:
         return ''
     return s3_url.split('.')[-1]
+
+def get_folder_items(bf, name):
+    if 'dataset' in name:
+        return bf.get_dataset(name)
+    return bf.get(name)
