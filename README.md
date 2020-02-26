@@ -26,11 +26,15 @@ _collectiondbf requires python 3.3+ and tkinter to run_
 
 # Usage
 
-### Command Line
+## Command Line
+
+### Downloading Collections
 The commands below will download the desired directory at the command prompts location.
 ```
-python -m collectiondbf <api-key> <api-secret> <collection:ID>
+python -m collectiondbf <collection:ID> [api-key] [api-secret] [--recursive]
 ```
+
+Add the `--recursive` option if you wish to download all nested directories under the given location
 
 If you cannot find the collection ID for the folder you wish to download, check for it in the url like so:
 
@@ -38,11 +42,18 @@ If you cannot find the collection ID for the folder you wish to download, check 
 
 Alternatively check out [_this 50s video tutorial_](https://drive.google.com/file/d/1sZMIx8SsEygwtRhLSu_O5wT0Ql0-UJDx/view?usp=sharing) on how to find collection ID and API keys in Blackfynn
 
-### User Interface
+### Downloading Datasets
+Downloading datasets works exactly the same as downloading collections! Just put the dataset ID in place of the collection ID
+```
+python -m collectiondbf <dataset:ID> [api-key] [api-secret] [--recursive]
+```
+
+
+## User Interface
 Running `python -m collectiondbf`will start the following ui to input keys and collection ID
 ![select_channel_2019-09-13 16-24-58 (2)](https://user-images.githubusercontent.com/37255664/64837534-1a113900-d643-11e9-9ba7-3cd37ca74151.jpg)
 
-### Using config.py for regular usage 
+## Using config.py for regular usage 
 
 Set environment variables to your Blackfynn keys
 ```
