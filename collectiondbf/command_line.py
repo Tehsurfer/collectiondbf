@@ -4,6 +4,8 @@ from .config import API_TOKEN, API_SECRET
 import os
 import sys
 import platform
+import argparse
+from pathlib import Path
 if platform != "darwin":
     from .ui import DetailsInput
 import progressbar
@@ -16,20 +18,21 @@ def env_keys_valid():
 def arg_valid():
     if len(sys.argv) == 1:
         return False
-    if len(sys.argv[1].split('-')) == 5 and len(sys.argv[2].split('-')) == 5:
+    if len(sys.argv[2].split('-')) == 5 and len(sys.argv[3].split('-')) == 5:
         return True
     return False
 
 def run():
 
+    args = argparse_setup()
     if env_keys_valid():
         api_token = API_TOKEN
         api_secret = API_SECRET
-        collection = sys.argv[1]
+        collection = args.id
     elif arg_valid():
-        api_token = sys.argv[1]
-        api_secret = sys.argv[2]
-        collection = sys.argv[3]
+        api_token = args.key
+        api_secret = args.secret
+        collection = args.id
     elif len(sys.argv) == 1:
         if platform == "darwin":
             print('Sorry, tkinter in MacOS is not supported :(. Please use the CLI options')
@@ -42,12 +45,22 @@ def run():
     print('Looking for Collection...')
     col = get_folder_items(bf, collection)
     print('Collection found. Staring file downloads...')
+    get_files(col, recursive=args.recursive)
+
+
+def get_file_type(s3_url):
+    if len(s3_url.split('.')) == 2:
+        return ''
+    return s3_url.split('.')[-1]
+
+
+def get_files(collection, recursive=False, file_path=''):
+    Path(os.path.join(file_path, collection.name)).mkdir(parents=True, exist_ok=True)
     try:
-        os.mkdir(col.name)
+        os.mkdir(os.path.join(file_path, collection.name))
     except FileExistsError:
         pass
-
-    for item in progressbar.progressbar(col.items):
+    for item in progressbar.progressbar(collection.items):
         if 'files' in dir(item):
             for file in item.files:
                 file_type = get_file_type(file.s3_key)
@@ -55,16 +68,29 @@ def run():
                 response = requests.get(s3_url)
                 if response.status_code == 200:
                     sys.stdout.write('\rDownloading file: %s' % file.name)
-                    f = open(col.name + '/' + file.name + file_type, 'wb')
+                    f = open(os.path.join(file_path, collection.name, file.name + file_type), 'wb')
                     f.write(response.content)
                     sys.stdout.flush()
+        elif recursive:
+            get_files(item, recursive=True, file_path=os.path.join(file_path, collection.name))
 
-def get_file_type(s3_url):
-    if len(s3_url.split('.')) == 2:
-        return ''
-    return s3_url.split('.')[-1]
 
 def get_folder_items(bf, name):
     if 'dataset' in name:
         return bf.get_dataset(name)
     return bf.get(name)
+
+
+def argparse_setup():
+    parser = argparse.ArgumentParser(description='Download datasets and folders from Blackfynn')
+    parser.add_argument("id", nargs='?', type=str, help="This is the Package ID or Dataset ID associated with the"
+                                                        "data you would like to download. Find it by checking the"
+                                                        "URL of a dataset or folder you wish to download")
+    parser.add_argument("key", nargs='?', type=str, help="This is the your Blackfynn 'API Token' key")
+    parser.add_argument("secret", nargs='?', type=str, help="This is the your Blackfynn 'API Secret' key")
+
+    parser.add_argument("--recursive", action="store_true", help="Set this value to true if you wish to download"
+                                                                  "folders recursively")
+    args = parser.parse_args()
+    print(args.recursive)
+    return args
