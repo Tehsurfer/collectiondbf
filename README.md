@@ -29,8 +29,10 @@ _collectiondbf requires python 3.3+ and tkinter to run_
 ### Command Line
 The commands below will download the desired directory at the command prompts location.
 ```
-python -m collectiondbf <api-key> <api-secret> <collection:ID>
+python -m collectiondbf <collection:ID> [api-key] [api-secret] [--recursive]
 ```
+
+Add the `--recursive` option if you wish to download all nested directories under the given location
 
 If you cannot find the collection ID for the folder you wish to download, check for it in the url like so:
 
