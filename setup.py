@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="collectiondbf",
-    version="1.0.0",
+    version="1.1.0",
     author="Jesse Khorasanee",
     author_email="jessekhorasanee@gmail.com",
     description="Download all files in a Blackfynn collection via command line or gui",
@@ -25,7 +25,8 @@ setuptools.setup(
     install_requires=[
          'blackfynn',
          'requests',
-        'progressbar2'
+        'progressbar2',
+        'appdirs'
     ],
     python_requires='>=3.5',
 )

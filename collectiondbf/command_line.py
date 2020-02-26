@@ -5,6 +5,8 @@ import os
 import sys
 import platform
 import argparse
+import json
+import appdirs
 from pathlib import Path
 if platform != "darwin":
     from .ui import DetailsInput
@@ -25,14 +27,25 @@ def arg_valid():
 def run():
 
     args = argparse_setup()
+    config = config_file()
     if env_keys_valid():
         api_token = API_TOKEN
         api_secret = API_SECRET
+        collection = args.id
+    elif config:
+        api_token = config['token']
+        api_secret = config['secret']
         collection = args.id
     elif arg_valid():
         api_token = args.key
         api_secret = args.secret
         collection = args.id
+        try:
+            bf = Blackfynn(api_token=api_token, api_secret=api_secret)
+            create_config_file(api_token, api_secret)
+        except:
+            pass
+
     elif len(sys.argv) == 1:
         if platform == "darwin":
             print('Sorry, tkinter in MacOS is not supported :(. Please use the CLI options')
@@ -42,6 +55,7 @@ def run():
 
     bf = Blackfynn(api_token=api_token,api_secret=api_secret)
     print('Connected to Blackfynn')
+
     print('Looking for Collection...')
     col = get_folder_items(bf, collection)
     print('Collection found. Staring file downloads...')
@@ -94,3 +108,23 @@ def argparse_setup():
     args = parser.parse_args()
     print(args.recursive)
     return args
+
+def create_config_file(api_token, api_secret):
+    CONFIG_DIR = Path(appdirs.user_config_dir(appname='collectiondbf'))  # magic
+    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+
+    config = CONFIG_DIR / 'config.json'
+    with config.open('w') as f:
+            json.dump({'token':api_token,
+                        'secret':api_secret}, f)
+
+def config_file():
+    CONFIG_DIR = Path(appdirs.user_config_dir(appname='collectiondbf'))  # magic
+    CONFIG_DIR.mkdir(parents=True, exist_ok=True)
+
+    config = CONFIG_DIR / 'config.json'
+    if config.exists():
+        with config.open('r') as f:
+            return json.load(f)
+    else:
+        return False
