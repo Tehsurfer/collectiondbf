@@ -24,6 +24,8 @@ def arg_valid():
         return True
     return False
 
+def key_valid()
+
 def run():
 
     args = argparse_setup()
@@ -52,6 +54,11 @@ def run():
             return
         ui = DetailsInput()
         api_token, api_secret, collection = ui.values()
+        try:
+            bf = Blackfynn(api_token=api_token, api_secret=api_secret)
+            create_config_file(api_token, api_secret)
+        except:
+            pass
 
     bf = Blackfynn(api_token=api_token,api_secret=api_secret)
     print('Connected to Blackfynn')
