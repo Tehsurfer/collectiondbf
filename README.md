@@ -42,6 +42,8 @@ If you cannot find the collection ID for the folder you wish to download, check 
 
 Alternatively check out [_this 50s video tutorial_](https://drive.google.com/file/d/1sZMIx8SsEygwtRhLSu_O5wT0Ql0-UJDx/view?usp=sharing) on how to find collection ID and API keys in Blackfynn
 
+**NOTE** You only have to input your keys once! collectiondbf will save them for you for subsequent downloads!
+
 ### Downloading Datasets
 Downloading datasets works exactly the same as downloading collections! Just put the dataset ID in place of the collection ID
 ```
