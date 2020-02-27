@@ -24,8 +24,6 @@ def arg_valid():
         return True
     return False
 
-def key_valid()
-
 def run():
 
     args = argparse_setup()
