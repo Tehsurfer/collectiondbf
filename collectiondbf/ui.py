@@ -24,6 +24,7 @@ class DetailsInput():
         E3.insert(END, 'N:collection:0eed07e7-d147-4a2c-9411-1ea8f9ceffa5')
         E3.pack()
         E4 = Checkbutton(self.top,bd =5, text="Download all files recursively", variable=self._recursive)
+        E4.select()
         E4.pack()
         B = Button(self.top, text='Retrieve all files', command=self.finish)
         B.pack()       
@@ -33,8 +34,9 @@ class DetailsInput():
         self.api_token   = self._api_token.get()
         self.api_secret  = self._api_secret.get()
         self.collection  = self._collection.get()
+        self.recursive = self._recursive.get()
         self.top.destroy()
 
     def values(self):
-        return self.api_token, self.api_secret, self.collection, self._recursive
+        return self.api_token, self.api_secret, self.collection, self.recursive
 

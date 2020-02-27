@@ -86,7 +86,10 @@ def get_files(collection, recursive=False, file_path=''):
             for file in item.files:
                 file_type = get_file_type(file.s3_key)
                 s3_url = file.url
-                response = requests.get(s3_url)
+                try:
+                    response = requests.get(s3_url)
+                except MemoryError:
+                    print(file.name + ' was too big to fit into memory :( Skipping this file')
                 if response.status_code == 200:
                     sys.stdout.write('\rDownloading file: %s' % file.name)
                     f = open(os.path.join(file_path, collection.name, file.name + '.' + file_type), 'wb')
