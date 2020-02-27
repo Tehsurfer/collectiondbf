@@ -28,7 +28,21 @@ def run():
 
     args = argparse_setup()
     config = config_file()
-    if env_keys_valid():
+
+    if len(sys.argv) == 1:
+        if platform == "darwin":
+            print('Sorry, tkinter in MacOS is not supported :(. Please use the CLI options')
+            return
+        ui = DetailsInput()
+        api_token, api_secret, collection, args.recursive = ui.values()
+        try:
+            bf = Blackfynn(api_token=api_token, api_secret=api_secret)
+            create_config_file(api_token, api_secret)
+        except:
+            if config:
+                api_token = config['token']
+                api_secret = config['secret']
+    elif env_keys_valid():
         api_token = API_TOKEN
         api_secret = API_SECRET
         collection = args.id
@@ -45,19 +59,7 @@ def run():
             create_config_file(api_token, api_secret)
         except:
             pass
-
-    elif len(sys.argv) == 1:
-        if platform == "darwin":
-            print('Sorry, tkinter in MacOS is not supported :(. Please use the CLI options')
-            return
-        ui = DetailsInput()
-        api_token, api_secret, collection = ui.values()
-        try:
-            bf = Blackfynn(api_token=api_token, api_secret=api_secret)
-            create_config_file(api_token, api_secret)
-        except:
-            pass
-
+    print('Recursive downloads set to: ' + str(args.recursive))
     bf = Blackfynn(api_token=api_token,api_secret=api_secret)
     print('Connected to Blackfynn')
 
@@ -68,7 +70,7 @@ def run():
 
 
 def get_file_type(s3_url):
-    if len(s3_url.split('.')) == 2:
+    if (len(s3_url.split('.')) <= 2 and 'com' in s3_url) or len(s3_url.split('.')) == 1:
         return ''
     return s3_url.split('.')[-1]
 
@@ -87,7 +89,7 @@ def get_files(collection, recursive=False, file_path=''):
                 response = requests.get(s3_url)
                 if response.status_code == 200:
                     sys.stdout.write('\rDownloading file: %s' % file.name)
-                    f = open(os.path.join(file_path, collection.name, file.name + file_type), 'wb')
+                    f = open(os.path.join(file_path, collection.name, file.name + '.' + file_type), 'wb')
                     f.write(response.content)
                     sys.stdout.flush()
         elif recursive:
@@ -111,7 +113,6 @@ def argparse_setup():
     parser.add_argument("--recursive", action="store_true", help="Set this value to true if you wish to download"
                                                                   "folders recursively")
     args = parser.parse_args()
-    print(args.recursive)
     return args
 
 def create_config_file(api_token, api_secret):
