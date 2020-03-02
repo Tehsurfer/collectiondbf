@@ -1,4 +1,4 @@
-blackfynn==3.0.0
+blackfynn==3.5.0
 requests==2.22.0
 progressbar2==3.43.1
 appdirs==1.4.3

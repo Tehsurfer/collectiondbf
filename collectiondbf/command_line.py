@@ -77,26 +77,37 @@ def get_file_type(s3_url):
 
 def get_files(collection, recursive=False, file_path=''):
     Path(os.path.join(file_path, collection.name)).mkdir(parents=True, exist_ok=True)
+    for item in progressbar.progressbar(collection.items):
+        if recursive and not downloading_blackfynn_package(item, collection, file_path):
+            get_files(item, recursive=True, file_path=os.path.join(file_path, collection.name))
+
+def downloading_blackfynn_package(item, collection, file_path):
+    if 'files' in dir(item):
+        for file in item.files:
+            file_type = get_file_type(file.s3_key)
+            s3_url = file.url
+            response = get_file_from_s3(s3_url, file.name)
+            if response.status_code == 200:
+                sys.stdout.write('\rDownloading file: %s' % file.name)
+                f = open(os.path.join(file_path, collection.name, file.name + '.' + file_type), 'wb')
+                f.write(response.content)
+                sys.stdout.flush()
+        return True
+    return False
+
+def get_file_from_s3(url, file_name=''):
     try:
-        os.mkdir(os.path.join(file_path, collection.name))
+        response = requests.get(url)
+    except MemoryError:
+        print(str(file_name) + ' was too big to fit into memory :( Skipping this file. ' +
+                          'Feel free to download manually with this link: \n' + url)
+    return response
+
+def make_dir(dir_path):
+    try:
+        os.mkdir(dir_path)
     except FileExistsError:
         pass
-    for item in progressbar.progressbar(collection.items):
-        if 'files' in dir(item):
-            for file in item.files:
-                file_type = get_file_type(file.s3_key)
-                s3_url = file.url
-                try:
-                    response = requests.get(s3_url)
-                except MemoryError:
-                    print(file.name + ' was too big to fit into memory :( Skipping this file')
-                if response.status_code == 200:
-                    sys.stdout.write('\rDownloading file: %s' % file.name)
-                    f = open(os.path.join(file_path, collection.name, file.name + '.' + file_type), 'wb')
-                    f.write(response.content)
-                    sys.stdout.flush()
-        elif recursive:
-            get_files(item, recursive=True, file_path=os.path.join(file_path, collection.name))
 
 
 def get_folder_items(bf, name):
