@@ -33,7 +33,10 @@ def run():
         if platform == "darwin":
             print('Sorry, tkinter in MacOS is not supported :(. Please use the CLI options')
             return
-        ui = DetailsInput()
+        if config:
+            ui = DetailsInput(api_token=config['token'], api_secret=config['secret'])
+        else:
+            ui = DetailsInput()
         api_token, api_secret, collection, args.recursive = ui.values()
         try:
             bf = Blackfynn(api_token=api_token, api_secret=api_secret)

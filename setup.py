@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="collectiondbf",
-    version="1.1.5",
+    version="1.1.6",
     author="Jesse Khorasanee",
     author_email="jessekhorasanee@gmail.com",
     description="Download all files in a Blackfynn collection via command line or gui",
