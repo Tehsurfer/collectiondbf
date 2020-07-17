@@ -73,9 +73,10 @@ def run():
 
 
 def get_file_type(s3_url):
-    if (len(s3_url.split('.')) <= 2 and 'com' in s3_url) or len(s3_url.split('.')) == 1:
+    file_name = s3_url.split('/')[-1]
+    if len(file_name.split('.')) == 1:
         return ''
-    return s3_url.split('.')[-1]
+    return file_name.split('.')[-1]
 
 
 def get_files(collection, recursive=False, file_path=''):
@@ -88,13 +89,17 @@ def downloading_blackfynn_package(item, collection, file_path):
     if 'files' in dir(item):
         for file in item.files:
             file_type = get_file_type(file.s3_key)
-            s3_url = file.url
-            response = get_file_from_s3(s3_url, file.name)
-            if response.status_code == 200:
-                sys.stdout.write('\rDownloading file: %s' % file.name)
-                f = open(os.path.join(file_path, collection.name, file.name + '.' + file_type), 'wb')
-                f.write(response.content)
-                sys.stdout.flush()
+            new_file_path = os.path.join(file_path, collection.name, file.name + '.' + file_type)
+            if os.path.exists(new_file_path):
+                sys.stdout.write('\rFile Already Exists! Filename is: %s ' % file.name)
+            else:
+                s3_url = file.url
+                response = get_file_from_s3(s3_url, file.name)
+                if response.status_code == 200:
+                    sys.stdout.write('\rDownloading file: %s' % file.name)
+                    f = open(new_file_path, 'wb')
+                    f.write(response.content)
+                    sys.stdout.flush()
         return True
     return False
 
@@ -104,6 +109,7 @@ def get_file_from_s3(url, file_name=''):
     except MemoryError:
         print(str(file_name) + ' was too big to fit into memory :( Skipping this file. ' +
                           'Feel free to download manually with this link: \n' + url)
+
     return response
 
 def make_dir(dir_path):
