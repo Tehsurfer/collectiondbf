@@ -24,7 +24,7 @@ class DetailsInput:
         E2 = Entry(self.top, bd=5, textvariable=self._api_secret)
         E2.insert(END, api_secret)
         E2.pack()
-        L3 = Label(self.top, text="Collection ID")
+        L3 = Label(self.top, text="Dataset ID OR Collection ID")
         L3.pack()
         E3 = Entry(self.top, bd=5, textvariable=self._collection)
         E3.insert(END, 'N:collection:0eed07e7-d147-4a2c-9411-1ea8f9ceffa5')
